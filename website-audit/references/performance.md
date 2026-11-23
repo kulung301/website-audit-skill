@@ -1,11 +1,20 @@
 # Performance checks
 
-**Scripts:** `check_html.py` reports static indicators only (compression, render-blocking scripts, image dimensions, third-party hosts, HTML size); `check_headers.py` reports Cache-Control and Content-Encoding. **No script measures Core Web Vitals.** Without Lighthouse or field data, write "Not measured".
+**Scripts:** `check_html.py` reports static indicators only (compression, render-blocking scripts, image dimensions, third-party hosts, HTML size); `check_headers.py` reports Cache-Control and Content-Encoding. `check_rendered.py` (Tier C) measures Core Web Vitals in the lab via Lighthouse. Without Tier C or field data, write "Not measured".
 
 ## Core Web Vitals (C, or external data)
 Targets at the 75th percentile: **LCP 2.5s or less, INP 200ms or less, CLS 0.1 or less**.
 - Prefer field data (Chrome UX Report, PageSpeed Insights) over lab data. Lab data (Lighthouse) is a useful proxy but varies by run and device profile.
 - If you cannot measure, write **Not measured**. Do not estimate Core Web Vitals from HTML.
+
+## Lab measurements via check_rendered.py (C)
+One Lighthouse run, emulated device (mobile by default, `--preset desktop` for desktop), categories performance + accessibility. Numbers are copied from the Lighthouse report; the script never estimates.
+- **LCP**: issue `cwv.lcp_slow` — medium over 2.5s, high over 4.0s.
+- **CLS**: issue `cwv.cls_high` — medium over 0.1, high over 0.25.
+- **INP**: issue `cwv.inp_slow` when Lighthouse returns a value (medium over 200ms, high over 500ms). Lab runs usually return none; the output then carries `inp_note` saying INP was **not measured**, and Total Blocking Time is reported instead as a labelled proxy (`cwv.tbt_high`, low over 200ms, medium over 600ms). Never present TBT as INP.
+- All rendered findings carry confidence `likely`: one lab run is evidence, not a verdict. If the report matters, run twice and say both numbers.
+- A failed run (no Chrome, interstitial, timeout) comes back as `not_checked` with Lighthouse's own error quoted — list it under "What was not checked", never as a pass.
+- Behind a proxy, the script passes the environment's proxy to Chrome (value never printed) and `--ignore-cert-errors` is available as an explicit opt-in; when used, the output says so, and TLS findings still belong to `check_headers.py`.
 
 ## Static indicators (A or B)
 These are signals, not metrics. Label them as indicators.

@@ -14,6 +14,7 @@ website-audit/            the skill itself (install this folder)
 │   ├── check_html.py     SEO, accessibility, content, static performance of one page
 │   ├── check_links.py    link status codes and redirect chains
 │   ├── check_crawl.py    robots.txt, sitemaps, security.txt
+│   ├── check_rendered.py Tier C: Lighthouse wrapper — lab Core Web Vitals, rendered accessibility
 │   └── merge_reports.py  combine outputs, compute counts and cross-page duplicates
 └── assets/report-template.md
 tests/run_tests.py        offline tests against a local server with planted defects
@@ -33,6 +34,7 @@ evals/                    prompts for testing the skill end to end (empty for no
 ```
 python3 website-audit/scripts/check_headers.py https://example.com/ > headers.json
 python3 website-audit/scripts/check_html.py    https://example.com/ > html.json
+python3 website-audit/scripts/check_rendered.py https://example.com/ > rendered.json   # Tier C, needs Lighthouse + Chrome
 python3 website-audit/scripts/merge_reports.py headers.json html.json
 ```
 Exit code 2 with `"status": "not_checked"` means the target could not be fetched; the JSON says why.
@@ -46,8 +48,8 @@ Exit code 2 with `"status": "not_checked"` means the target could not be fetched
 
 ## Known limits
 
-- JavaScript is never executed, so client-rendered content is invisible; `check_html.py` warns when a page looks client-rendered.
-- No Core Web Vitals, color contrast, keyboard or focus testing. These need Lighthouse/axe/a browser and are reported as not checked.
+- JavaScript is never executed by the Tier A/B scripts, so client-rendered content is invisible to them; `check_html.py` warns when a page looks client-rendered. Tier C (`check_rendered.py`) renders with Chrome via Lighthouse.
+- Core Web Vitals are lab-only (one emulated Lighthouse run, no field/CrUX data) and only at Tier C; INP is usually not measurable in the lab and is then reported as not measured, with Total Blocking Time as a labelled proxy. Keyboard traps, focus order and other manual accessibility checks are never automated here and are reported as not checked.
 - Header results describe one response; other paths may differ.
 
 ## Tests
@@ -59,7 +61,7 @@ Runs every script against a local server with deliberately broken pages and asse
 
 ## Status
 
-Draft. Next: end-to-end eval prompts in `evals/`, an optional Lighthouse wrapper for Tier C.
+Draft. Next: end-to-end eval prompts in `evals/`. (Done since the first draft: MIT license, and the Tier C Lighthouse wrapper `check_rendered.py`.)
 
 ## License
 

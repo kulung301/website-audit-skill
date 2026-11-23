@@ -1,6 +1,6 @@
 # Accessibility checks (WCAG 2.2)
 
-**Scripts:** `check_html.py` covers the static-HTML list below. Everything under "Needs a rendered browser" is not covered by any script here; list it under Not checked unless you ran axe-core or Lighthouse yourself.
+**Scripts:** `check_html.py` covers the static-HTML list below. `check_rendered.py` (Tier C) covers the rendered list via Lighthouse's accessibility audits. Anything neither script ran stays under Not checked.
 
 Automated and static checks catch only part of real accessibility problems. Say so in the report.
 
@@ -17,7 +17,8 @@ Automated and static checks catch only part of real accessibility problems. Say 
 
 ## Needs a rendered browser or axe-core (C)
 - Color contrast (1.4.3, 1.4.11), visible focus (2.4.7, 2.4.11), keyboard traps and tab order (2.1.1, 2.1.2), reflow at 320px width (1.4.10), text spacing (1.4.12), motion and autoplay.
-- If Tier C is unavailable, list these under **Not checked**.
+- `check_rendered.py` runs Lighthouse's automated accessibility audits (axe-based): every failing binary audit becomes an `a11y.<audit-id>` issue with the failing elements as evidence — this includes color contrast. Audits Lighthouse marks *manual* cannot be automated; the script lists them under `accessibility_manual_checks_not_done`, and they belong in **Not checked** (keyboard traps and focus order are among them — a passing Lighthouse run does not prove keyboard access).
+- If Tier C is unavailable, list all of these under **Not checked**.
 
 ## Reporting
 Cite the WCAG criterion with each finding. Group repeated issues (for example, "23 images missing alt, all in the gallery template") instead of listing every instance.

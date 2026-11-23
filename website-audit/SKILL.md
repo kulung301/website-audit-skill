@@ -37,6 +37,7 @@ All are in `scripts/`, use only the Python standard library, and print JSON. Run
 | `check_html.py <url>` or `--file` | SEO, accessibility, content and static performance signals of one page | B (or A with `--file`) |
 | `check_links.py <url>` | Status codes and redirect chains of links on a page | B |
 | `check_crawl.py <origin>` | robots.txt, sitemap(s), security.txt | B |
+| `check_rendered.py <url>` | Core Web Vitals (lab) and rendered accessibility via Lighthouse | C |
 | `merge_reports.py *.json` | Combines outputs; computes counts and cross-page duplicates | any |
 
 ## Workflow
@@ -49,7 +50,7 @@ Run `python3 scripts/detect_env.py <url>`. Do not assume network access; the scr
 
 - **Tier A**: scripts cannot reach the target. Use the page-fetch tool only. Static checks from the reference files can be done by hand on fetched HTML, quoting what you saw; header, redirect, TLS and link checks are **Not checked**. Say why, and quote the network error from the output.
 - **Tier B**: scripts can reach the target. Run them.
-- **Tier C**: B plus a browser or Lighthouse. Add rendered checks (Core Web Vitals, contrast) only if you actually run them; the scripts here do not.
+- **Tier C**: B plus a browser or Lighthouse. Run `check_rendered.py` for lab Core Web Vitals and rendered accessibility (including contrast). Its numbers are one emulated lab run — label them that way, and if it returns `not_checked`, rendered checks are **Not checked**, not passed.
 
 If the output has `proxy_variables_set` or `tls_interception_suspected`, the environment sits behind a proxy or TLS inspection. Report TLS certificate details as unconfirmed, and suggest re-running from another network.
 
@@ -61,6 +62,7 @@ python3 scripts/check_crawl.py  https://site.example  > work/crawl.json
 python3 scripts/check_headers.py https://site.example/ > work/headers-home.json
 python3 scripts/check_html.py    https://site.example/ > work/html-home.json
 python3 scripts/check_links.py   https://site.example/ > work/links-home.json
+python3 scripts/check_rendered.py https://site.example/ > work/rendered-home.json   # Tier C only
 ```
 Repeat `check_html.py` for each sampled page. A non-zero exit with `"status": "not_checked"` means the check did not happen; keep that file, because `merge_reports.py` lists it under not checked.
 

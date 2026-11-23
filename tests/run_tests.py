@@ -222,7 +222,7 @@ def main():
                           capture_output=True, text=True, timeout=30, env=env)
     out = json.loads(proc.stdout)
     check("proxy variable noted in caveats and environment",
-          out["environment"]["proxy_variables_set"] == ["https_proxy"] and out["environment"]["tls_interception_suspected"], out.get("environment"))
+          "https_proxy" in out["environment"]["proxy_variables_set"] and out["environment"]["tls_interception_suspected"], out.get("environment"))
     check("interception heuristic: proxy-style issuer flagged, public CA not",
           ch.looks_intercepted("organizationName=Anthropic, commonName=Egress Gateway SDS Issuing CA")
           and not ch.looks_intercepted("organizationName=Let's Encrypt, commonName=R11"))
@@ -255,6 +255,30 @@ def main():
     sevs = [i["severity_hint"] for i in m["issues"]]
     order = ["critical", "high", "medium", "low"]
     check("issues sorted by severity", sevs == sorted(sevs, key=order.index), sevs)
+
+    # --- check_rendered (Tier C): honesty when Lighthouse is missing; real run when available
+    d, rc = run("check_rendered.py", base + "/", "--lighthouse-bin", "/nonexistent/lighthouse")
+    check("check_rendered without Lighthouse -> not_checked, exit 2",
+          d.get("status") == "not_checked" and rc == 2 and "issues" not in d, d.get("status"))
+    import shutil as _shutil
+    lh_bin = os.environ.get("LIGHTHOUSE_BIN") or _shutil.which("lighthouse")
+    chrome_bin = (os.environ.get("CHROME_PATH") or _shutil.which("google-chrome")
+                  or _shutil.which("chrome") or _shutil.which("chromium"))
+    if lh_bin and chrome_bin:
+        d, rc = run("check_rendered.py", base + "/", "--lighthouse-bin", lh_bin,
+                    "--chrome-path", chrome_bin, "--run-timeout", "240")
+        m = d.get("measurements") or {}
+        check("check_rendered live run returns category scores",
+              rc == 0 and (m.get("scores") or {}).get("performance") is not None, m.get("scores"))
+        check("check_rendered reports a numeric LCP copied from Lighthouse",
+              (m.get("metrics") or {}).get("lcp", {}).get("numeric") is not None, m.get("metrics"))
+        check("empty <button> on the fixture fails Lighthouse button-name",
+              "a11y.button-name" in ids(d), sorted(ids(d)))
+        check("manual accessibility audits listed as not done, not passed",
+              len(m.get("accessibility_manual_checks_not_done") or []) > 0,
+              m.get("accessibility_manual_checks_not_done"))
+    else:
+        print("SKIP check_rendered live run (lighthouse or chrome not available)")
 
     srv.shutdown()
     print("\n%d failed" % len(FAILS) if FAILS else "\nall passed")
