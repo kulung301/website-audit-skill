@@ -1,0 +1,15 @@
+# Audit working files and outputs — a real audit report is a map of a site's
+# weaknesses. Never commit results for real sites (including your own).
+work/
+out/
+reports/
+*-audit.json
+merged.json
+
+# Python
+__pycache__/
+*.py[cod]
+
+# OS / editor noise
+.DS_Store
+*.swp
