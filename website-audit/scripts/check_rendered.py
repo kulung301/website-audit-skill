@@ -66,9 +66,11 @@ def find_chrome(arg):
         p = shutil.which(name)
         if p:
             return p
-    for pat in (os.path.expanduser("~/.cache/puppeteer/chrome/*/chrome-linux64/chrome"),
-                os.path.expanduser("~/workspace/tools/puppeteer/cache/chrome/*/chrome-linux64/chrome")):
-        hits = sorted(glob.glob(pat))
+    cache_dirs = [os.path.expanduser("~/.cache/puppeteer")]
+    if os.environ.get("PUPPETEER_CACHE_DIR"):
+        cache_dirs.insert(0, os.environ["PUPPETEER_CACHE_DIR"])
+    for base in cache_dirs:
+        hits = sorted(glob.glob(os.path.join(base, "chrome", "*", "chrome-linux64", "chrome")))
         if hits:
             return hits[-1]
     return None
