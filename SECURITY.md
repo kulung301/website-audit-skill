@@ -8,9 +8,7 @@
 
 ## Reporting a problem with this skill
 
-- Reports can be emailed to the maintainer at
-  **shokonishimiya955@gmail.com**.
-- For ordinary bugs, a GitHub issue is equally welcome.
+- For ordinary bugs, open a GitHub issue.
 - For anything sensitive — for example a way to make the scripts contact
   unintended hosts, bypass the SSRF guard, or leak data from the machine
   running them — please do not post details publicly. Use GitHub's private

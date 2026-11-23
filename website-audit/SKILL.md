@@ -92,7 +92,3 @@ Fill `assets/report-template.md`. Write in the language the user is using and tr
 
 ## Done when
 Every in-scope area has findings, an explicit "no issues found in the checks performed" tied to which checks ran, or a "Not checked" entry with the reason. The report states the tier, the pages sampled, and the date.
-
-## Problems with this skill
-
-If a script misbehaves, these instructions are wrong for a situation you hit, or the skill itself seems broken, tell the user what happened — do not hide a failure of the tool inside a report about a website. Problems with the skill can be reported to the maintainer at shokonishimiya955@gmail.com or as an issue on the kulung301/website-audit-skill GitHub repository.
