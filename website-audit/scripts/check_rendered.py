@@ -179,6 +179,11 @@ def main():
     ap.add_argument("--ignore-cert-errors", action="store_true",
                     help="pass --ignore-certificate-errors to Chrome (for TLS-intercepting proxies; "
                          "the run is then labelled, and TLS itself stays check_headers.py's job)")
+    ap.add_argument("--proxy-server",
+                    help="proxy for Chrome, e.g. http://127.0.0.1:18080. Overrides the environment's "
+                         "proxy variables. Needed when the real proxy requires credentials embedded "
+                         "in its URL: Chrome rejects those in --proxy-server, so run a local relay "
+                         "that injects the auth and point this at the relay.")
     ap.add_argument("--run-timeout", type=float, default=240.0, help="whole Lighthouse run timeout, seconds")
     add_common_args(ap)
     args = ap.parse_args()
@@ -211,7 +216,7 @@ def main():
         # Behind a proxy (corporate network, sandbox), Chrome needs the proxy spelled out;
         # urllib-based scripts get it from the environment automatically, Chrome does not.
         # The proxy VALUE is used here only and never printed (it may hold credentials).
-        proxy = (os.environ.get("https_proxy") or os.environ.get("HTTPS_PROXY")
+        proxy = (args.proxy_server or os.environ.get("https_proxy") or os.environ.get("HTTPS_PROXY")
                  or os.environ.get("all_proxy") or os.environ.get("ALL_PROXY")
                  or os.environ.get("http_proxy") or os.environ.get("HTTP_PROXY"))
         if proxy:

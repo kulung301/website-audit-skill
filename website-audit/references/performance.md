@@ -15,6 +15,7 @@ One Lighthouse run, emulated device (mobile by default, `--preset desktop` for d
 - All rendered findings carry confidence `likely`: one lab run is evidence, not a verdict. If the report matters, run twice and say both numbers.
 - A failed run (no Chrome, interstitial, timeout) comes back as `not_checked` with Lighthouse's own error quoted — list it under "What was not checked", never as a pass.
 - Behind a proxy, the script passes the environment's proxy to Chrome (value never printed) and `--ignore-cert-errors` is available as an explicit opt-in; when used, the output says so, and TLS findings still belong to `check_headers.py`.
+- **Credentialled proxies:** Chrome rejects any `--proxy-server` value that embeds credentials (`net::ERR_NO_SUPPORTED_PROXIES`), and a credential-free value gets a 407. If the environment's proxy needs embedded auth, run a tiny local relay that injects the `Proxy-Authorization` header toward the upstream proxy and listens on loopback without auth, then pass `--proxy-server http://127.0.0.1:<port>`. A TLS-intercepting proxy additionally needs `--ignore-cert-errors` (labelled, see above). A reference relay implementation pattern: read the upstream proxy URL from the environment at runtime, keep the credential in memory only, bind 127.0.0.1 only.
 
 ## Static indicators (A or B)
 These are signals, not metrics. Label them as indicators.
