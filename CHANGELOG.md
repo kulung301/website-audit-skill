@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/), and
 versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.0.1] - 2026-11-23
+
+### Added
+
+- Maintainer contact address for reports about the skill itself
+  (SKILL.md "Problems with this skill" section and SECURITY.md).
+
 ## [1.0.0] - 2026-11-23
 
 Initial public release.
