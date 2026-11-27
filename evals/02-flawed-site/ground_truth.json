@@ -1,0 +1,850 @@
+{
+  "caveats": [
+    "robots.txt rules are listed as written; this script does not evaluate per-URL crawlability.",
+    "Only a sample of sitemap URLs is requested.",
+    "Headers are from one response; other paths, methods or user agents may differ.",
+    "A header reported missing means missing in this response, not necessarily absent site-wide.",
+    "Certificate details are what this machine's network path presents; networks with TLS inspection (corporate proxies, sandboxes) substitute their own certificate.",
+    "The certificate issuer or environment suggests TLS inspection or a proxy on this network path. Certificate details (and possibly some headers) may describe that intermediary, not the audited site.",
+    "JavaScript was not executed; content added client-side is not seen.",
+    "Color contrast, focus visibility, keyboard traps and reflow are NOT checked by this script.",
+    "Only links present in the static HTML were checked (no JavaScript).",
+    "Internal means the same hostname as the page; other subdomains count as external.",
+    "Capped at --max-links."
+  ],
+  "coverage": {
+    "check_crawl": [
+      "http://127.0.0.1:8921"
+    ],
+    "check_headers": [
+      "http://127.0.0.1:8921/"
+    ],
+    "check_html": [
+      "http://127.0.0.1:8921/"
+    ],
+    "check_links": [
+      "http://127.0.0.1:8921/"
+    ]
+  },
+  "input_load_errors": [],
+  "inputs": [
+    "/home/hatch/workspace/website-audit-skill/evals/02-flawed-site/work/crawl.json",
+    "/home/hatch/workspace/website-audit-skill/evals/02-flawed-site/work/headers-home.json",
+    "/home/hatch/workspace/website-audit-skill/evals/02-flawed-site/work/html-home.json",
+    "/home/hatch/workspace/website-audit-skill/evals/02-flawed-site/work/links-home.json"
+  ],
+  "issues": [
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": "http://127.0.0.1:8921/",
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "form.password_over_http",
+      "message": "A password field is on a page served over HTTP.",
+      "pages_affected": 1,
+      "severity_hint": "high"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": "http://127.0.0.1:8921/",
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "https.not_used",
+      "message": "The final URL is served over plain HTTP.",
+      "pages_affected": 1,
+      "severity_hint": "high"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "agents": [
+              "badbot"
+            ],
+            "rule": "Disallow: /"
+          },
+          "examples": null,
+          "tool": "check_crawl",
+          "where": "http://127.0.0.1:8921"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "robots.blocks_agent",
+      "message": "robots.txt disallows the whole site for specific crawlers.",
+      "pages_affected": 1,
+      "severity_hint": "high"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": "<meta name=\"robots\" content=\"noindex, nofollow\">",
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "robots.noindex",
+      "message": "Meta robots tells search engines not to index this page.",
+      "pages_affected": 1,
+      "severity_hint": "high"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "titles_found": []
+          },
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "title.missing",
+      "message": "The page has no non-empty <title>.",
+      "pages_affected": 1,
+      "severity_hint": "high"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "<button>"
+          ],
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "accessibility",
+      "confidence": [
+        "verified"
+      ],
+      "id": "buttons.empty_name",
+      "message": "Buttons with no accessible name.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "clickjacking.unprotected",
+      "message": "Neither X-Frame-Options nor CSP frame-ancestors was sent.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "o Broken Redirects Chain mail Lorem ipsum dolor sit amet. \u00a9 2019 Exampl"
+          ],
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "content",
+      "confidence": [
+        "verified"
+      ],
+      "id": "content.placeholder_text",
+      "message": "Placeholder-style text found in visible content.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": [
+            "sid"
+          ],
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "cookie.no_httponly",
+      "message": "Cookies without HttpOnly (includes session-like names).",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "report_only_present": false
+          },
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "csp.missing",
+      "message": "No Content-Security-Policy header on this response.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "accessibility",
+      "confidence": [
+        "verified"
+      ],
+      "id": "html.lang_missing",
+      "message": "<html> has no lang attribute.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "<img src=\"/a.png\">"
+          ],
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "accessibility",
+      "confidence": [
+        "verified"
+      ],
+      "id": "images.alt_missing",
+      "message": "Images without an alt attribute (alt=\"\" is fine for decorative images).",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": 2,
+          "evidence": null,
+          "examples": [
+            "<input type=\"text\" name=\"q\" placeholder=\"Search\">",
+            "<input type=\"password\" id=\"pw\">"
+          ],
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "accessibility",
+      "confidence": [
+        "verified"
+      ],
+      "id": "inputs.no_label",
+      "message": "Form controls without a label, aria-label, aria-labelledby or title (placeholder does not count).",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "error": "Expecting property name enclosed in double quotes: line 1 column 23 (char 22)",
+            "snippet": "{ \"@type\": \"Article\","
+          },
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "jsonld.invalid",
+      "message": "A JSON-LD block is not valid JSON.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "http://127.0.0.1:8921/missing -> 404"
+          ],
+          "tool": "check_links",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "content",
+      "confidence": [
+        "verified"
+      ],
+      "id": "links.broken",
+      "message": "Links returning an error status or unreachable.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "<a href=\"/good\">"
+          ],
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "accessibility",
+      "confidence": [
+        "verified"
+      ],
+      "id": "links.empty_name",
+      "message": "Links with no text, aria-label, title or image alt.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "meta_description.missing",
+      "message": "No meta description.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "/head-blocking.js"
+          ],
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "performance",
+      "confidence": [
+        "verified"
+      ],
+      "id": "render_blocking.scripts",
+      "message": "External scripts in <head> without async/defer/module.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "http://other.example/x"
+          ],
+          "tool": "check_crawl",
+          "where": "http://127.0.0.1:8921"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "sitemap.cross_host",
+      "message": "Sitemap lists URLs on a different host.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": 3,
+          "evidence": {
+            "of_total": 4,
+            "sampled": 4
+          },
+          "examples": [
+            "http://127.0.0.1:8921/redirect -> 301",
+            "http://127.0.0.1:8921/missing -> 404",
+            "http://other.example/x -> RemoteDisconnected: Remote end closed connection without response"
+          ],
+          "tool": "check_crawl",
+          "where": "http://127.0.0.1:8921"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "sitemap.urls_not_200",
+      "message": "Sampled sitemap URLs that do not return 200 directly.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": "width=device-width, user-scalable=no",
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "accessibility",
+      "confidence": [
+        "verified"
+      ],
+      "id": "viewport.zoom_disabled",
+      "message": "Viewport meta restricts pinch zoom.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "canonical": "https://example.com/other",
+            "page_url": "http://127.0.0.1:8921/"
+          },
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "canonical.differs",
+      "message": "Canonical URL differs from the fetched URL; confirm this is intended.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "latest_found": 2019,
+            "script_run_year": 2026
+          },
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "content",
+      "confidence": [
+        "verified"
+      ],
+      "id": "content.copyright_outdated",
+      "message": "Latest copyright year on the page is earlier than the year this script ran.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "visible_words": 15
+          },
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "content",
+      "confidence": [
+        "likely"
+      ],
+      "id": "content.thin",
+      "message": "Little visible text in the static HTML; judge against the page's purpose.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": [
+            "sid"
+          ],
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "cookie.no_samesite",
+      "message": "Cookies without an explicit SameSite attribute.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "server": "BaseHTTP/0.6 Python/3.12.3"
+          },
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "disclosure.version",
+      "message": "Response headers reveal software or version details.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": [
+            "One",
+            "Two"
+          ],
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "h1.multiple",
+      "message": "More than one <h1>.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "h1 to h3 at 'Jump'"
+          ],
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "heading.skipped_level",
+      "message": "Heading levels are skipped.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": 2,
+          "evidence": null,
+          "examples": [
+            "<img src=\"/a.png\">",
+            "<img src=\"/b.png\" alt=\"\">"
+          ],
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "performance",
+      "confidence": [
+        "verified"
+      ],
+      "id": "images.no_dimensions",
+      "message": "Images without width and height attributes (layout shift risk).",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "accessibility",
+      "confidence": [
+        "verified"
+      ],
+      "id": "landmarks.main_missing",
+      "message": "No <main> or role=main in the static HTML.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "http://127.0.0.1:8921/old -> http://127.0.0.1:8921/redirect -> http://127.0.0.1:8921/good"
+          ],
+          "tool": "check_links",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "content",
+      "confidence": [
+        "verified"
+      ],
+      "id": "links.redirect_chain",
+      "message": "Links that go through two or more redirects.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "http://127.0.0.1:8921/redirect -> http://127.0.0.1:8921/good"
+          ],
+          "tool": "check_links",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "content",
+      "confidence": [
+        "verified"
+      ],
+      "id": "links.redirecting",
+      "message": "Internal/external links that redirect once (could point at the final URL).",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": [
+            "og:title",
+            "og:description",
+            "og:image"
+          ],
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "og.missing",
+      "message": "Open Graph tags missing.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "permissions_policy.missing",
+      "message": "No Permissions-Policy header.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "referrer_policy.missing",
+      "message": "No Referrer-Policy header.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": [
+            "Disallow: /assets/js/"
+          ],
+          "examples": null,
+          "tool": "check_crawl",
+          "where": "http://127.0.0.1:8921"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "needs_manual_check"
+      ],
+      "id": "robots.may_block_assets",
+      "message": "Disallow rules match common CSS/JS/asset paths; verify rendering resources are not blocked.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "status": 404
+          },
+          "examples": null,
+          "tool": "check_crawl",
+          "where": "http://127.0.0.1:8921"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "security_txt.missing",
+      "message": "No security.txt at the standard location (optional best practice).",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8921/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "xcto.missing",
+      "message": "X-Content-Type-Options: nosniff not present.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    }
+  ],
+  "merged_at": "2026-11-27T13:34:00Z",
+  "not_checked": [],
+  "summary": {
+    "distinct_issues": 38,
+    "distinct_issues_by_category": {
+      "accessibility": 7,
+      "content": 6,
+      "performance": 2,
+      "security": 11,
+      "seo": 12
+    },
+    "distinct_issues_by_severity_hint": {
+      "critical": 0,
+      "high": 5,
+      "low": 17,
+      "medium": 16
+    },
+    "note": "Counts are distinct issue types, not instances. See each issue's pages_affected and count."
+  },
+  "tool": "merge_reports"
+}

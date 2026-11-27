@@ -1,0 +1,416 @@
+{
+  "caveats": [
+    "robots.txt rules are listed as written; this script does not evaluate per-URL crawlability.",
+    "Only a sample of sitemap URLs is requested.",
+    "Headers are from one response; other paths, methods or user agents may differ.",
+    "A header reported missing means missing in this response, not necessarily absent site-wide.",
+    "Certificate details are what this machine's network path presents; networks with TLS inspection (corporate proxies, sandboxes) substitute their own certificate.",
+    "The certificate issuer or environment suggests TLS inspection or a proxy on this network path. Certificate details (and possibly some headers) may describe that intermediary, not the audited site.",
+    "JavaScript was not executed; content added client-side is not seen.",
+    "Color contrast, focus visibility, keyboard traps and reflow are NOT checked by this script.",
+    "Only links present in the static HTML were checked (no JavaScript).",
+    "Internal means the same hostname as the page; other subdomains count as external.",
+    "Capped at --max-links."
+  ],
+  "coverage": {
+    "check_crawl": [
+      "http://127.0.0.1:8917"
+    ],
+    "check_headers": [
+      "http://127.0.0.1:8917/"
+    ],
+    "check_html": [
+      "http://127.0.0.1:8917/",
+      "http://127.0.0.1:8917/about"
+    ],
+    "check_links": [
+      "http://127.0.0.1:8917/"
+    ]
+  },
+  "input_load_errors": [],
+  "inputs": [
+    "/home/hatch/workspace/website-audit-skill/tests/regression-drift/work/crawl.json",
+    "/home/hatch/workspace/website-audit-skill/tests/regression-drift/work/headers-home.json",
+    "/home/hatch/workspace/website-audit-skill/tests/regression-drift/work/html-about.json",
+    "/home/hatch/workspace/website-audit-skill/tests/regression-drift/work/html-home.json",
+    "/home/hatch/workspace/website-audit-skill/tests/regression-drift/work/links-home.json"
+  ],
+  "issues": [
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": "http://127.0.0.1:8917/",
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "https.not_used",
+      "message": "The final URL is served over plain HTTP.",
+      "pages_affected": 1,
+      "severity_hint": "high"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "clickjacking.unprotected",
+      "message": "Neither X-Frame-Options nor CSP frame-ancestors was sent.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "report_only_present": false
+          },
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "csp.missing",
+      "message": "No Content-Security-Policy header on this response.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "<img src=\"/logo.png\">"
+          ],
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "accessibility",
+      "confidence": [
+        "verified"
+      ],
+      "id": "images.alt_missing",
+      "message": "Images without an alt attribute (alt=\"\" is fine for decorative images).",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "http://127.0.0.1:8917/gone -> 404"
+          ],
+          "tool": "check_links",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "content",
+      "confidence": [
+        "verified"
+      ],
+      "id": "links.broken",
+      "message": "Links returning an error status or unreachable.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "meta_description.missing",
+      "message": "No meta description.",
+      "pages_affected": 1,
+      "severity_hint": "medium"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/about"
+        },
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "canonical.missing",
+      "message": "No canonical link.",
+      "pages_affected": 2,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "visible_words": 18
+          },
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/about"
+        },
+        {
+          "count": null,
+          "evidence": {
+            "visible_words": 20
+          },
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "content",
+      "confidence": [
+        "likely"
+      ],
+      "id": "content.thin",
+      "message": "Little visible text in the static HTML; judge against the page's purpose.",
+      "pages_affected": 2,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/about"
+        },
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "accessibility",
+      "confidence": [
+        "verified"
+      ],
+      "id": "landmarks.main_missing",
+      "message": "No <main> or role=main in the static HTML.",
+      "pages_affected": 2,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": [
+            "og:title",
+            "og:description",
+            "og:image"
+          ],
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/about"
+        },
+        {
+          "count": null,
+          "evidence": [
+            "og:title",
+            "og:description",
+            "og:image"
+          ],
+          "examples": null,
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "seo",
+      "confidence": [
+        "verified"
+      ],
+      "id": "og.missing",
+      "message": "Open Graph tags missing.",
+      "pages_affected": 2,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "server": "BaseHTTP/0.6 Python/3.12.3"
+          },
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "disclosure.version",
+      "message": "Response headers reveal software or version details.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": 1,
+          "evidence": null,
+          "examples": [
+            "<img src=\"/logo.png\">"
+          ],
+          "tool": "check_html",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "performance",
+      "confidence": [
+        "verified"
+      ],
+      "id": "images.no_dimensions",
+      "message": "Images without width and height attributes (layout shift risk).",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "permissions_policy.missing",
+      "message": "No Permissions-Policy header.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "referrer_policy.missing",
+      "message": "No Referrer-Policy header.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": {
+            "status": 404
+          },
+          "examples": null,
+          "tool": "check_crawl",
+          "where": "http://127.0.0.1:8917"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "security_txt.missing",
+      "message": "No security.txt at the standard location (optional best practice).",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    },
+    {
+      "affected": [
+        {
+          "count": null,
+          "evidence": null,
+          "examples": null,
+          "tool": "check_headers",
+          "where": "http://127.0.0.1:8917/"
+        }
+      ],
+      "category": "security",
+      "confidence": [
+        "verified"
+      ],
+      "id": "xcto.missing",
+      "message": "X-Content-Type-Options: nosniff not present.",
+      "pages_affected": 1,
+      "severity_hint": "low"
+    }
+  ],
+  "merged_at": "2026-11-27T13:28:47Z",
+  "not_checked": [],
+  "summary": {
+    "distinct_issues": 16,
+    "distinct_issues_by_category": {
+      "accessibility": 2,
+      "content": 2,
+      "performance": 1,
+      "security": 8,
+      "seo": 3
+    },
+    "distinct_issues_by_severity_hint": {
+      "critical": 0,
+      "high": 1,
+      "low": 10,
+      "medium": 5
+    },
+    "note": "Counts are distinct issue types, not instances. See each issue's pages_affected and count."
+  },
+  "tool": "merge_reports"
+}

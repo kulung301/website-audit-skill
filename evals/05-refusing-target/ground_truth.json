@@ -1,0 +1,282 @@
+{
+  "tool": "merge_reports",
+  "merged_at": "2026-11-27T13:34:21Z",
+  "inputs": [
+    "work/crawl.json",
+    "work/headers-home.json",
+    "work/html-home.json",
+    "work/links-home.json"
+  ],
+  "input_load_errors": [],
+  "summary": {
+    "distinct_issues": 10,
+    "distinct_issues_by_severity_hint": {
+      "critical": 1,
+      "high": 1,
+      "medium": 2,
+      "low": 6
+    },
+    "distinct_issues_by_category": {
+      "seo": 2,
+      "security": 8
+    },
+    "note": "Counts are distinct issue types, not instances. See each issue's pages_affected and count."
+  },
+  "coverage": {
+    "check_crawl": [
+      "http://127.0.0.1:8923"
+    ],
+    "check_headers": [
+      "http://127.0.0.1:8923/"
+    ],
+    "check_html": [
+      "http://127.0.0.1:8923/"
+    ],
+    "check_links": [
+      "http://127.0.0.1:8923/"
+    ]
+  },
+  "not_checked": [
+    {
+      "tool": "check_html",
+      "where": "http://127.0.0.1:8923/",
+      "errors": [
+        {
+          "url": "http://127.0.0.1:8923/",
+          "error": "HTTP 403"
+        },
+        {
+          "url": "http://127.0.0.1:8923/",
+          "error": "not HTML (content-type: text/plain)"
+        }
+      ]
+    },
+    {
+      "tool": "check_links",
+      "where": "http://127.0.0.1:8923/",
+      "errors": [
+        {
+          "url": "http://127.0.0.1:8923/",
+          "error": "HTTP 403"
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "id": "robots.blocks_all",
+      "category": "seo",
+      "severity_hint": "critical",
+      "message": "robots.txt disallows the whole site for all crawlers.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8923",
+          "tool": "check_crawl",
+          "count": null,
+          "evidence": {
+            "agents": [
+              "*"
+            ],
+            "rule": "Disallow: /"
+          },
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "https.not_used",
+      "category": "security",
+      "severity_hint": "high",
+      "message": "The final URL is served over plain HTTP.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8923/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": "http://127.0.0.1:8923/",
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "clickjacking.unprotected",
+      "category": "security",
+      "severity_hint": "medium",
+      "message": "Neither X-Frame-Options nor CSP frame-ancestors was sent.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8923/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "csp.missing",
+      "category": "security",
+      "severity_hint": "medium",
+      "message": "No Content-Security-Policy header on this response.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8923/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": {
+            "report_only_present": false
+          },
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "disclosure.version",
+      "category": "security",
+      "severity_hint": "low",
+      "message": "Response headers reveal software or version details.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8923/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": {
+            "server": "BaseHTTP/0.6 Python/3.12.3"
+          },
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "permissions_policy.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "message": "No Permissions-Policy header.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8923/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "referrer_policy.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "message": "No Referrer-Policy header.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8923/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "security_txt.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "message": "No security.txt at the standard location (optional best practice).",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8923",
+          "tool": "check_crawl",
+          "count": null,
+          "evidence": {
+            "status": 403
+          },
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "sitemap.not_found",
+      "category": "seo",
+      "severity_hint": "low",
+      "message": "No sitemap declared in robots.txt and none found at /sitemap.xml.",
+      "confidence": [
+        "likely"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8923",
+          "tool": "check_crawl",
+          "count": null,
+          "evidence": [
+            {
+              "url": "http://127.0.0.1:8923/sitemap.xml",
+              "status": 403,
+              "error": null
+            }
+          ],
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "xcto.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "message": "X-Content-Type-Options: nosniff not present.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8923/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    }
+  ],
+  "caveats": [
+    "robots.txt rules are listed as written; this script does not evaluate per-URL crawlability.",
+    "Only a sample of sitemap URLs is requested.",
+    "Headers are from one response; other paths, methods or user agents may differ.",
+    "A header reported missing means missing in this response, not necessarily absent site-wide.",
+    "Certificate details are what this machine's network path presents; networks with TLS inspection (corporate proxies, sandboxes) substitute their own certificate.",
+    "The certificate issuer or environment suggests TLS inspection or a proxy on this network path. Certificate details (and possibly some headers) may describe that intermediary, not the audited site."
+  ]
+}

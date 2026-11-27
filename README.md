@@ -18,7 +18,8 @@ website-audit/            the skill itself (install this folder)
 │   └── merge_reports.py  combine outputs, compute counts and cross-page duplicates
 └── assets/report-template.md
 tests/run_tests.py        offline tests against a local server with planted defects
-evals/                    prompts for testing the skill end to end (empty for now)
+tests/regression-drift/   fixture scenario for report-drift regressions
+evals/                    end-to-end evals: 5 fixture scenarios with measured ground truth
 ```
 
 ## Install
@@ -61,7 +62,17 @@ Runs every script against a local server with deliberately broken pages and asse
 
 ## Status
 
-Draft. Next: end-to-end eval prompts in `evals/`. (Done since the first draft: MIT license, and the Tier C Lighthouse wrapper `check_rendered.py`.)
+**Version 1.0.3** (2026-11-27) — see [CHANGELOG](CHANGELOG.md).
+Published on ClawHub: https://clawhub.ai/kulung301/skills/website-audit
+(install by name there, or copy the `website-audit/` folder from
+this repo). Releases follow [RELEASING.md](RELEASING.md).
+
+End-to-end evals (`evals/`): 5 of 5 PASS on Muse (2026-11-27),
+including the report-drift regression scenario in
+`tests/regression-drift/`. A re-run of the same evals on
+LightVela/Hermes against this version is pending; per the project
+roadmap, the v1.1 "mature" milestone requires the evals passing on
+two platforms plus one real release through the documented flow.
 
 ## License
 

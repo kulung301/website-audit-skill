@@ -1,0 +1,341 @@
+{
+  "tool": "merge_reports",
+  "merged_at": "2026-11-27T13:38:51Z",
+  "inputs": [
+    "gt03/crawl.json",
+    "gt03/headers.json",
+    "gt03/html.json",
+    "gt03/links.json"
+  ],
+  "input_load_errors": [],
+  "summary": {
+    "distinct_issues": 14,
+    "distinct_issues_by_severity_hint": {
+      "critical": 0,
+      "high": 1,
+      "medium": 3,
+      "low": 10
+    },
+    "distinct_issues_by_category": {
+      "security": 8,
+      "seo": 4,
+      "content": 1,
+      "accessibility": 1
+    },
+    "note": "Counts are distinct issue types, not instances. See each issue's pages_affected and count."
+  },
+  "coverage": {
+    "check_crawl": [
+      "http://127.0.0.1:8922"
+    ],
+    "check_headers": [
+      "http://127.0.0.1:8922/"
+    ],
+    "check_html": [
+      "http://127.0.0.1:8922/"
+    ],
+    "check_links": [
+      "http://127.0.0.1:8922/"
+    ]
+  },
+  "not_checked": [],
+  "issues": [
+    {
+      "id": "https.not_used",
+      "category": "security",
+      "severity_hint": "high",
+      "message": "The final URL is served over plain HTTP.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": "http://127.0.0.1:8922/",
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "clickjacking.unprotected",
+      "category": "security",
+      "severity_hint": "medium",
+      "message": "Neither X-Frame-Options nor CSP frame-ancestors was sent.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "csp.missing",
+      "category": "security",
+      "severity_hint": "medium",
+      "message": "No Content-Security-Policy header on this response.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": {
+            "report_only_present": false
+          },
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "h1.missing",
+      "category": "seo",
+      "severity_hint": "medium",
+      "message": "No <h1> found in the static HTML.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_html",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "canonical.missing",
+      "category": "seo",
+      "severity_hint": "low",
+      "message": "No canonical link.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_html",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "content.thin",
+      "category": "content",
+      "severity_hint": "low",
+      "message": "Little visible text in the static HTML; judge against the page's purpose.",
+      "confidence": [
+        "likely"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_html",
+          "count": null,
+          "evidence": {
+            "visible_words": 4
+          },
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "disclosure.version",
+      "category": "security",
+      "severity_hint": "low",
+      "message": "Response headers reveal software or version details.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": {
+            "server": "BaseHTTP/0.6 Python/3.12.3"
+          },
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "landmarks.main_missing",
+      "category": "accessibility",
+      "severity_hint": "low",
+      "message": "No <main> or role=main in the static HTML.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_html",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "og.missing",
+      "category": "seo",
+      "severity_hint": "low",
+      "message": "Open Graph tags missing.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_html",
+          "count": null,
+          "evidence": [
+            "og:title",
+            "og:description",
+            "og:image"
+          ],
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "permissions_policy.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "message": "No Permissions-Policy header.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "referrer_policy.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "message": "No Referrer-Policy header.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "security_txt.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "message": "No security.txt at the standard location (optional best practice).",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922",
+          "tool": "check_crawl",
+          "count": null,
+          "evidence": {
+            "status": 404
+          },
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "sitemap.not_found",
+      "category": "seo",
+      "severity_hint": "low",
+      "message": "No sitemap declared in robots.txt and none found at /sitemap.xml.",
+      "confidence": [
+        "likely"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922",
+          "tool": "check_crawl",
+          "count": null,
+          "evidence": [
+            {
+              "url": "http://127.0.0.1:8922/sitemap.xml",
+              "status": 404,
+              "error": null
+            }
+          ],
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    },
+    {
+      "id": "xcto.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "message": "X-Content-Type-Options: nosniff not present.",
+      "confidence": [
+        "verified"
+      ],
+      "affected": [
+        {
+          "where": "http://127.0.0.1:8922/",
+          "tool": "check_headers",
+          "count": null,
+          "evidence": null,
+          "examples": null
+        }
+      ],
+      "pages_affected": 1
+    }
+  ],
+  "caveats": [
+    "robots.txt rules are listed as written; this script does not evaluate per-URL crawlability.",
+    "Only a sample of sitemap URLs is requested.",
+    "Headers are from one response; other paths, methods or user agents may differ.",
+    "A header reported missing means missing in this response, not necessarily absent site-wide.",
+    "Certificate details are what this machine's network path presents; networks with TLS inspection (corporate proxies, sandboxes) substitute their own certificate.",
+    "The certificate issuer or environment suggests TLS inspection or a proxy on this network path. Certificate details (and possibly some headers) may describe that intermediary, not the audited site.",
+    "JavaScript was not executed; content added client-side is not seen.",
+    "Color contrast, focus visibility, keyboard traps and reflow are NOT checked by this script.",
+    "Only links present in the static HTML were checked (no JavaScript).",
+    "Internal means the same hostname as the page; other subdomains count as external.",
+    "Capped at --max-links."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "tool": "detect_env",
+  "checked_at": "2026-11-27T13:34:47Z",
+  "python": "3.12.3",
+  "tools_found": {
+    "curl": "/usr/bin/curl",
+    "node": "/usr/bin/node",
+    "npx": "/opt/hatch-image/bin/npx"
+  },
+  "proxy_variables_set": [
+    "all_proxy",
+    "http_proxy",
+    "https_proxy"
+  ],
+  "proxy_note": "A proxy is configured in this environment. TLS certificate details (and possibly some headers) may describe the proxy rather than the audited site, so treat them as unconfirmed.",
+  "network_test": {
+    "url": "http://127.0.0.1:8921",
+    "reachable": false,
+    "status": null,
+    "error": "refused: 127.0.0.1 resolves to non-public address 127.0.0.1 (use --allow-private only for sites you control)"
+  },
+  "tier": "A",
+  "note": "Scripts cannot reach the target from here. Use the page-fetch tool only and mark header/redirect/link checks as Not checked."
+}

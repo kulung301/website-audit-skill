@@ -73,12 +73,19 @@ Repeat `check_html.py` for each sampled page. A non-zero exit with `"status": "n
 Read the matching reference file for areas in scope: `references/seo.md`, `security.md`, `performance.md`, `accessibility.md`, `content.md`. They say what each script covers, what it cannot see, and how to word findings.
 
 - **severity_hint** is a deterministic starting point. You may adjust it only with a stated reason tied to evidence (for example `canonical.differs` is low by default, but if the evidence shows every page canonicalizing to the homepage, say so and raise it).
+- **Verbatim rule:** every count, severity label and coverage statement in your report is copied from the merged output, never recounted, rounded or relabelled from memory. If a number is not in the merged output, it does not go in the report.
 - **Confidence** values: `verified` (direct evidence), `likely` (strong signal that depends on something unobserved), `needs_manual_check` (cannot be confirmed here). Keep the label in the report.
 
 Severity meanings: **Critical** blocks users, indexing or safety; **High** significant harm probably affecting many pages or users; **Medium** real but bounded; **Low** hygiene.
 
 ### 6. Report
 Fill `assets/report-template.md`. Write in the language the user is using and translate the headings. Put the few most important findings first. Group repeats ("14 pages share this title") using the merged output. Always fill "What was not checked" from the merged `not_checked` list plus anything a tier prevented (for example Core Web Vitals, contrast, keyboard use).
+
+**Anti-drift checklist (run before delivering the report):**
+- [ ] Every count, severity label and coverage statement matches `merged.json` verbatim. A number that is not in the merged output is removed, not estimated.
+- [ ] Any severity that differs from `severity_hint` carries its written, evidence-tied reason inside the finding itself.
+- [ ] Negative claims are cross-checked: before writing "no X" (no sitemap, no robots.txt, no HTTPS redirect), confirm the absence in the output of the script that owns that check (`check_crawl.py` for sitemap and robots, `check_headers.py` for headers, `check_links.py` for link targets). A check that did not run is reported as not checked, never as absent.
+- [ ] The summary and the body agree: the same finding carries the same severity and the same counts everywhere it appears.
 
 ## Finding format
 

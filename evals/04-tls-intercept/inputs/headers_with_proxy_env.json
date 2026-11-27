@@ -1,0 +1,179 @@
+{
+  "tool": "check_headers",
+  "checked_at": "2026-11-27T13:34:47Z",
+  "target": "http://127.0.0.1:8921/",
+  "errors": [],
+  "caveats": [
+    "Headers are from one response; other paths, methods or user agents may differ.",
+    "A header reported missing means missing in this response, not necessarily absent site-wide.",
+    "Certificate details are what this machine's network path presents; networks with TLS inspection (corporate proxies, sandboxes) substitute their own certificate.",
+    "The certificate issuer or environment suggests TLS inspection or a proxy on this network path. Certificate details (and possibly some headers) may describe that intermediary, not the audited site."
+  ],
+  "environment": {
+    "proxy_variables_set": [
+      "all_proxy",
+      "http_proxy",
+      "https_proxy"
+    ],
+    "tls_interception_suspected": true
+  },
+  "final_url": "http://127.0.0.1:8921/",
+  "measurements": {
+    "redirect_chain": [
+      {
+        "url": "http://127.0.0.1:8921/",
+        "status": 200,
+        "error": null
+      }
+    ],
+    "tls": {
+      "checked": false,
+      "reason": "final URL is not https"
+    },
+    "security_headers": {
+      "strict-transport-security": {
+        "present": false,
+        "value": null
+      },
+      "content-security-policy": {
+        "present": false,
+        "value": null
+      },
+      "content-security-policy-report-only": null,
+      "x-content-type-options": null,
+      "x-frame-options": null,
+      "referrer-policy": null,
+      "permissions-policy": null
+    },
+    "disclosure": {
+      "server": "BaseHTTP/0.6 Python/3.12.3",
+      "x-powered-by": null,
+      "via": null,
+      "x-cache": null
+    },
+    "cookies": [
+      {
+        "name": "sid",
+        "secure": false,
+        "httponly": false,
+        "samesite": null,
+        "session_like_name": true
+      }
+    ],
+    "delivery": {
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "content_encoding": null,
+      "cache_control": null,
+      "etag": false,
+      "last_modified": false,
+      "access_control_allow_origin": null,
+      "time_to_headers_ms": 4,
+      "timing_note": "single request from this machine; not a performance score"
+    },
+    "raw_headers": [
+      [
+        "Server",
+        "BaseHTTP/0.6 Python/3.12.3"
+      ],
+      [
+        "Date",
+        "Fri, 27 Nov 2026 13:34:47 GMT"
+      ],
+      [
+        "Content-Type",
+        "text/html; charset=utf-8"
+      ],
+      [
+        "Server",
+        "TestServer/1.0"
+      ],
+      [
+        "Set-Cookie",
+        "sid=<redacted>; Path=/"
+      ],
+      [
+        "Content-Length",
+        "791"
+      ]
+    ]
+  },
+  "issues": [
+    {
+      "id": "https.not_used",
+      "category": "security",
+      "severity_hint": "high",
+      "confidence": "verified",
+      "message": "The final URL is served over plain HTTP.",
+      "evidence": "http://127.0.0.1:8921/"
+    },
+    {
+      "id": "csp.missing",
+      "category": "security",
+      "severity_hint": "medium",
+      "confidence": "verified",
+      "message": "No Content-Security-Policy header on this response.",
+      "evidence": {
+        "report_only_present": false
+      }
+    },
+    {
+      "id": "xcto.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "confidence": "verified",
+      "message": "X-Content-Type-Options: nosniff not present."
+    },
+    {
+      "id": "clickjacking.unprotected",
+      "category": "security",
+      "severity_hint": "medium",
+      "confidence": "verified",
+      "message": "Neither X-Frame-Options nor CSP frame-ancestors was sent."
+    },
+    {
+      "id": "referrer_policy.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "confidence": "verified",
+      "message": "No Referrer-Policy header."
+    },
+    {
+      "id": "permissions_policy.missing",
+      "category": "security",
+      "severity_hint": "low",
+      "confidence": "verified",
+      "message": "No Permissions-Policy header."
+    },
+    {
+      "id": "disclosure.version",
+      "category": "security",
+      "severity_hint": "low",
+      "confidence": "verified",
+      "message": "Response headers reveal software or version details.",
+      "evidence": {
+        "server": "BaseHTTP/0.6 Python/3.12.3"
+      }
+    },
+    {
+      "id": "cookie.no_httponly",
+      "category": "security",
+      "severity_hint": "medium",
+      "confidence": "verified",
+      "message": "Cookies without HttpOnly (includes session-like names).",
+      "evidence": [
+        "sid"
+      ]
+    },
+    {
+      "id": "cookie.no_samesite",
+      "category": "security",
+      "severity_hint": "low",
+      "confidence": "verified",
+      "message": "Cookies without an explicit SameSite attribute.",
+      "evidence": [
+        "sid"
+      ]
+    }
+  ]
+}

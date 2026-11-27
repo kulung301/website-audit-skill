@@ -1,0 +1,38 @@
+{
+  "tool": "merge_reports",
+  "merged_at": "2026-11-27T13:33:47Z",
+  "inputs": [
+    "work/crawl.json",
+    "work/html-home.json",
+    "work/html-about.json"
+  ],
+  "input_load_errors": [],
+  "summary": {
+    "distinct_issues": 0,
+    "distinct_issues_by_severity_hint": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "distinct_issues_by_category": {},
+    "note": "Counts are distinct issue types, not instances. See each issue's pages_affected and count."
+  },
+  "coverage": {
+    "check_crawl": [
+      "http://127.0.0.1:8920"
+    ],
+    "check_html": [
+      "http://127.0.0.1:8920/",
+      "http://127.0.0.1:8920/about"
+    ]
+  },
+  "not_checked": [],
+  "issues": [],
+  "caveats": [
+    "robots.txt rules are listed as written; this script does not evaluate per-URL crawlability.",
+    "Only a sample of sitemap URLs is requested.",
+    "JavaScript was not executed; content added client-side is not seen.",
+    "Color contrast, focus visibility, keyboard traps and reflow are NOT checked by this script."
+  ]
+}
